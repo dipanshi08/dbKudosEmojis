@@ -18,8 +18,8 @@ public class EmployeeService {
 	private EmployeeRepository repo;
 	@Autowired
 	private BadgesRepository repo1;
-//	@Autowired
-//	private MappingTableRepository repo2;
+	@Autowired
+	private MappingTableRepository repo2;
 	@Autowired
 	private ProfileRepository repo3;
 	
@@ -59,32 +59,7 @@ public class EmployeeService {
 		//System.out.println(p.toString());
 		return p;
 	}
-	
-	/*public void modify(String email_id, int amount)
-	{
-		Employee e = this.repo.findById(email_id).get();
-		e.setKudos_points(e.getKudos_points()-amount);
-	}*/
-	
-//	public String updateEvent(Cart entity) 
-//	{
-//		String email_id = entity.getEmail_id();
-//		int kc = entity.getKudos_cost();
-//		List < String > bid = entity.getBadge_id();
-//		System.out.println(email_id+" "+kc);
-//		System.out.println(bid);
-//		
-//	       Optional<Employee> optionalEvent = this.repo.findById(email_id);
-//	       if(!optionalEvent.isPresent()) {
-//	           return "Failed Cannot ";
-//	       }
-//	       Employee event = optionalEvent.get();
-//			event.setKudos_spent(10);
-//	       
-//	       repo.save(event);
-//	       return "success";
-//	   }
-	
+
 	public int buyBadge(Cart entity) 
 	{
 		String email_id = entity.getEmail_id();
@@ -98,32 +73,36 @@ public class EmployeeService {
 		e.setKudos_spent(e.getKudos_spent()+kc);
 		repo.save(e);
 		
-//		Map<String, Integer> map = new HashMap<String, Integer>();
-//		List<String> mapt = this.repo2.getMappingTable(email_id);
-//		for (String event : mapt) {
-//            String[] data = event.split(",");
-//            map.put(data[1], Integer.parseInt(data[2]));
-//        }
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		List<String> mapt = this.repo2.getMappingTable(email_id);
+		for (String event : mapt) {
+            String[] data = event.split(",");
+            map.put(data[1], Integer.parseInt(data[2]));
+        }
 		
-//		for(String b:bid)
-//		{
-//			if(!map.containsKey(b))
-//			{
-//				MappingTable aaa = new MappingTable(email_id, b, 1);
-//				repo3.save(e);
-//			}
-//			else
-//			{
-//				MappingTable aaa = new MappingTable(email_id, b, 1+map.get(b));
-//				repo3.save(e);
-//			}
-//		}
+		for(String b:bid)
+		{
+//			System.out.println("In Iterate: "+b);
+			if(!map.containsKey(b))
+			{
+//				System.out.println("add");
+				MappingTable aaa = new MappingTable(email_id, b, 1);
+				map.put(b, 1);
+				repo2.save(aaa);
+			}
+			else
+			{
+//				System.out.println("update");
+				MappingTable aaa = new MappingTable(email_id, b, 1+map.get(b));
+				map.replace(b, 1+map.get(b));
+				repo2.save(aaa);
+			}
+		}
 		
 		e = this.repo.findById(email_id).get();
 		int kp = e.getKudos_points();
 		System.out.println(kp);
 		
 		return kp;
-		
 	}
 }

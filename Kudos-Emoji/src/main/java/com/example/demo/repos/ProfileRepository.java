@@ -16,5 +16,6 @@ public interface ProfileRepository extends JpaRepository<Employee, String>{
 	@Query(value = "Select a.badge_id, a.badge_name, b.badges_count from badge a, mapping_table  b where b.email_id=:email_id and a.badge_id=b.badge_id;", nativeQuery = true)
     List< String > getProfile(@Param("email_id") String email_id);
 	
-	
+//	@Query(value = "Select * mapping_table where email_id=:email_id;", nativeQuery = true)
+//    List< String > getMappingTable(@Param("email_id") String email_id);
 }

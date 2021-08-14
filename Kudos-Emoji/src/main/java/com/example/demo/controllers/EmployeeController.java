@@ -18,9 +18,8 @@ import com.example.demo.services.EmployeeService;
 
 @RestController
 @CrossOrigin(origins="*")
-public class EmployeeController {
-
-	
+public class EmployeeController 
+{
 	@Autowired
 	private EmployeeService service;
 	
@@ -60,53 +59,13 @@ public class EmployeeController {
 		return this.service.getProfile(email_id);
 	}
 	
-//	@GetMapping(path = "/restaurants/{id}")
-//	public Restaurant findById(@PathVariable("id") int id){
-//		
-//		//todo
-//	}
-//	
-//	@DeleteMapping(path = "/restaurants")
-//	public Restaurant remove(@RequestBody Restaurant entity){
-//		
-//		//todo
-//	}
-	
-
-//	@PostMapping(path = "/employees")
-//	public ResponseEntity<Employee> add(@RequestBody Employee entity){
-//		
-//		Employee addedEntity = this.service.add(entity);
-//		
-//		return ResponseEntity.status(HttpStatus.CREATED).body(addedEntity);		
-//	}
-	
 	@PostMapping(path = "/home/cart")
 	public ResponseEntity<Integer> buyBadge(@RequestBody Cart entity)
 	{	
-
 		System.out.println(entity);
 		int addedEntity = this.service.buyBadge(entity);
 		System.out.println(addedEntity);
 		
 		return ResponseEntity.status(HttpStatus.CREATED).body(addedEntity);		
 	}
-	
-	
-//	@PostMapping(path = "/restaurants")
-//	public ResponseEntity<Restaurant> add(@RequestBody Restaurant entity){
-//		
-//		Restaurant addedEntity = this.service.add(entity);
-//		
-//		return ResponseEntity.status(HttpStatus.CREATED).body(addedEntity);		
-//	}
-	
-	
-	/*@PostMapping(path = "/employees/{email_id}")
-	public void modify(@RequestBody String email_id, int amount){
-		this.service.modify(email_id,amount);
-	}*/
-	
-	
-	
 }

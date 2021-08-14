@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.persistence.Table;
 
 import lombok.AccessLevel;
@@ -12,15 +13,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
+//implements Serializable
+
+//@Data
+//@FieldDefaults(level = AccessLevel.PRIVATE)
+
 @Entity
 @Table(name = "mapping_table")
-
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
-public class MappingTable implements Serializable{
-	
+@IdClass(MapTableKey.class)
+public class MappingTable
+{	
 	@Id
 	String email_id;
 	@Id
